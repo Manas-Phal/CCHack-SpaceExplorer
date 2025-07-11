@@ -32,9 +32,9 @@ interface Observation {
 
 const ObservationTracker = () => {
   const { user } = useAuth();
-  const { addDocument, getDocuments, deleteDocument } = useFirestore();
+  const { addObservation, loading: isLoadingFromHook } = useFirestore(); 
   const { toast } = useToast();
-  
+
   const [observations, setObservations] = useState<Observation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
