@@ -80,47 +80,7 @@ Design trends like glassmorphism, dark mode, glowing effects, and cosmic gradien
 ---
 
 ## Project Structure
-space-explorer/
-├── public/                       # Static files served directly
-│   ├── index.html                # Main HTML file
-│   ├── favicon.ico               # Browser tab icon
-│   └── manifest.json             # PWA configuration
-│
-├── src/                          # Source files
-│   ├── assets/                   # Static assets (images, icons, etc.)
-│   │   └── logo.svg
-│
-│   ├── components/               # Reusable UI components
-│   │   ├── CelestialCard.jsx
-│   │   ├── SkyTonightModal.jsx
-│   │   ├── ObservationForm.jsx
-│   │   └── Navbar.jsx
-│
-│   ├── pages/                    # Top-level views/pages
-│   │   ├── Explore.jsx
-│   │   ├── Track.jsx
-│   │   ├── Profile.jsx
-│   │   └── Home.jsx
-│
-│   ├── context/                  # App context (e.g., Auth provider)
-│   │   └── AuthContext.jsx
-│
-│   ├── services/                 # External services and APIs
-│   │   ├── firebase.js           # Firebase configuration
-│   │   ├── astronomyAPI.js       # Astronomy data integration (NASA, etc.)
-│   │   └── uploadImage.js        # Image upload handler
-│
-│   ├── styles/                   # Global and utility styles
-│   │   └── global.css
-│
-│   ├── App.jsx                   # Main app component with routes
-│   ├── main.jsx                  # Entry point for ReactDOM rendering
-│   └── router.jsx                # Route definitions
-│
-├── .env                          # Environment variables (e.g., API keys)
-├── .gitignore                    # Git ignored files
-├── package.json                  # Project metadata and dependencies
-└── README.md                     # Project documentation
+<pre> <code> space-explorer/ ├── public/ # Static files served directly │ ├── index.html # Main HTML file │ ├── favicon.ico # Browser tab icon │ └── manifest.json # PWA configuration │ ├── src/ # Source files │ ├── assets/ # Static assets (images, icons, etc.) │ │ └── logo.svg │ │ ├── components/ # Reusable UI components │ │ ├── CelestialCard.jsx │ │ ├── SkyTonightModal.jsx │ │ ├── ObservationForm.jsx │ │ └── Navbar.jsx │ │ ├── pages/ # Top-level views/pages │ │ ├── Explore.jsx │ │ ├── Track.jsx │ │ ├── Profile.jsx │ │ └── Home.jsx │ │ ├── context/ # App context (e.g., Auth provider) │ │ └── AuthContext.jsx │ │ ├── services/ # External services and APIs │ │ ├── firebase.js # Firebase configuration │ │ ├── astronomyAPI.js # Astronomy data integration (NASA, etc.) │ │ └── uploadImage.js # Image upload handler │ │ ├── styles/ # Global and utility styles │ │ └── global.css │ │ ├── App.jsx # Main app component with routes │ ├── main.jsx # Entry point for ReactDOM rendering │ └── router.jsx # Route definitions │ ├── .env # Environment variables (e.g., API keys) ├── .gitignore # Git ignored files ├── package.json # Project metadata and dependencies └── README.md # Project documentation </code> </pre>
 
 
 ## 🔧 Installation
