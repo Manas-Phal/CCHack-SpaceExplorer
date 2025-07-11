@@ -43,6 +43,7 @@ const deleteDocument = async (collectionName: string, docId: string) => {
 
 interface Observation {
   id?: string;
+  userId?: string;
   title: string;
   date: string;
   time: string;
