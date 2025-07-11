@@ -11,6 +11,31 @@ import { useFirestore } from '../hooks/useFirestore';
 import { useToast } from '../hooks/use-toast';
 import LoadingSpinner from './LoadingSpinner';
 import ObservationStats from './ObservationStats';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+
+const db = getFirestore();
+
+const addDocument = async (collectionName: string, data: any) => {
+  const docRef = await addDoc(collection(db, collectionName), data);
+  return docRef.id;
+};
+
+const getDocuments = async (collectionName: string) => {
+  const snapshot = await getDocs(collection(db, collectionName));
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+
+const deleteDocument = async (collectionName: string, docId: string) => {
+  await deleteDoc(doc(db, collectionName, docId));
+};
+
 
 interface Observation {
   id?: string;
