@@ -27,10 +27,14 @@ const addDocument = async (collectionName: string, data: any) => {
   return docRef.id;
 };
 
-const getDocuments = async (collectionName: string) => {
+const getDocuments = async (collectionName: string): Promise<Observation[]> => {
   const snapshot = await getDocs(collection(db, collectionName));
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...(doc.data() as Observation)
+  }));
 };
+
 
 const deleteDocument = async (collectionName: string, docId: string) => {
   await deleteDoc(doc(db, collectionName, docId));
