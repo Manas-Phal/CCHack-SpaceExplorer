@@ -134,16 +134,16 @@ space-explorer/
 - Offline Mode: Cache star data for offline viewing
 
 # Browser Compatibility
-Chrome 80+
-Firefox 75+
-Safari 13+
-Edge 80+
+- Chrome 80+
+- Firefox 75+
+- Safari 13+
+- Edge 80+
 
 # Performance Notes
-Optimized for 60fps canvas rendering
-Efficient star filtering and search algorithms
-Responsive design with mobile-first approach
-Lazy loading for better initial load times
+- Optimized for 60fps canvas rendering
+- Efficient star filtering and search algorithms
+- Responsive design with mobile-first approach
+- Lazy loading for better initial load times
 
 ## 🔧 Installation
 
