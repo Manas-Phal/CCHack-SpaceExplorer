@@ -125,7 +125,25 @@ space-explorer/
 ├── package.json                  # Project metadata and dependencies
 └── README.md                     # Project documentation
 ```
+# Future Enhancements
+AR.js Integration: Full AR constellation overlay
+Three.js 3D View: True 3D star map with orbit controls
+Real-time Star Positions: API integration for accurate star positions
+Weather Integration: Cloud cover and visibility data
+Social Features: Share observations with other users
+Offline Mode: Cache star data for offline viewing
 
+# Browser Compatibility
+Chrome 80+
+Firefox 75+
+Safari 13+
+Edge 80+
+
+# Performance Notes
+Optimized for 60fps canvas rendering
+Efficient star filtering and search algorithms
+Responsive design with mobile-first approach
+Lazy loading for better initial load times
 
 ## 🔧 Installation
 
