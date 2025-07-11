@@ -296,13 +296,13 @@ const ObservationTracker = () => {
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Declination (DEC)
                 </label>
-                <Input
+                <Input>
                   name="coordinates.dec"
                   value={formData.coordinates.dec}
                   onChange={handleInputChange}
-                  placeholder="e.g., +41° 16' 09\""
+                  placeholder="e.g., +41° 16' 09\"
                   className="bg-black/40 border-purple-500/30 text-white"
-                />
+                </Input>
               </div>
             </div>
 
