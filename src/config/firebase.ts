@@ -5,12 +5,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCoWxcp748t1ybG_V9BPhWmOWVzjiH8y0U",
-  authDomain: "space-explorer2.firebaseapp.com",
-  projectId: "space-explorer2",
-  storageBucket: "space-explorer2.appspot.com", 
-  messagingSenderId: "88497717973",
-  appId: "1:88497717973:web:4a7df59ccbd45e2428985c"
+  apiKey: "AIzaSyBFw_WTbkUfs6O9YljUgo7Ma8eQuwToZRw",
+  authDomain: "space-explorer2-95c99.firebaseapp.com",
+  projectId: "space-explorer2-95c99",
+  storageBucket: "space-explorer2-95c99.firebasestorage.app", 
+  messagingSenderId: "402587585881",
+  appId: "1:402587585881:web:30591f8e38171307c2d048"
 };
 
 const app = initializeApp(firebaseConfig);
