@@ -7,33 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Camera, Save, Plus, Eye } from 'lucide-react';
+import { Calendar, MapPin, Camera, Save, Plus, Eye, Upload, User } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import { useFirestore } from '../hooks/useFirestore'; 
+import { useToast } from "@/hooks/use-toast";
+import AuthModal from './AuthModal';
 
 const ObservationTracker = () => {
-  const [observations, setObservations] = useState([
-    {
-      id: 1,
-      name: 'Jupiter with Moons',
-      date: '2024-12-01',
-      time: '21:30',
-      coordinates: 'RA 02h 45m, Dec +14° 32\'',
-      object: 'Planet',
-      notes: 'Clear view of four Galilean moons through 8" telescope. Great Red Spot visible!',
-      weather: 'Clear',
-      seeing: 'Excellent'
-    },
-    {
-      id: 2,
-      name: 'Orion Nebula',
-      date: '2024-11-28',
-      time: '23:15',
-      coordinates: 'RA 05h 35m, Dec -05° 23\'',
-      object: 'Nebula',
-      notes: 'Beautiful trapezium cluster visible. Used OIII filter for better contrast.',
-      weather: 'Partly Cloudy',
-      seeing: 'Good'
-    }
-  ]);
+  const { user } = useAuth();
+  const { observations, addObservation, loading } = useFirestore();
+  const { toast } = useToast();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const [newObservation, setNewObservation] = useState({
     name: '',
@@ -52,25 +36,39 @@ const ObservationTracker = () => {
     setNewObservation(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      setAuthModalOpen(true);
+      return;
+    }
+
     if (newObservation.name && newObservation.date) {
-      const observation = {
-        ...newObservation,
-        id: observations.length + 1
-      };
-      setObservations(prev => [observation, ...prev]);
-      setNewObservation({
-        name: '',
-        date: '',
-        time: '',
-        coordinates: '',
-        object: '',
-        notes: '',
-        weather: '',
-        seeing: ''
-      });
-      setShowForm(false);
+      try {
+        await addObservation(newObservation);
+        setNewObservation({
+          name: '',
+          date: '',
+          time: '',
+          coordinates: '',
+          object: '',
+          notes: '',
+          weather: '',
+          seeing: ''
+        });
+        setShowForm(false);
+        toast({
+          title: "Success",
+          description: "Observation saved successfully!"
+        });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to save observation",
+          variant: "destructive"
+        });
+      }
     }
   };
 
@@ -93,6 +91,27 @@ const ObservationTracker = () => {
       default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
     }
   };
+
+  if (!user) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Observation Log
+          </h2>
+          <p className="text-gray-300">Sign in to track your celestial observations</p>
+          <Button 
+            onClick={() => setAuthModalOpen(true)}
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+          >
+            <User className="w-4 h-4 mr-2" />
+            Sign In to Continue
+          </Button>
+        </div>
+        <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -210,9 +229,13 @@ const ObservationTracker = () => {
                 />
               </div>
               <div className="flex gap-2">
-                <Button type="submit" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                <Button 
+                  type="submit" 
+                  disabled={loading}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
                   <Save className="w-4 h-4 mr-2" />
-                  Save Observation
+                  {loading ? 'Saving...' : 'Save Observation'}
                 </Button>
                 <Button type="button" variant="outline" onClick={() => setShowForm(false)} className="border-purple-500/50 text-purple-300 hover:bg-purple-500/20">
                   Cancel
@@ -225,40 +248,50 @@ const ObservationTracker = () => {
 
       {/* Observation History */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-white">Recent Observations</h3>
-        {observations.map((obs) => (
-          <Card key={obs.id} className="bg-black/40 backdrop-blur-sm border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-            <CardHeader className="pb-3">
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Eye className="w-4 h-4" />
-                    {obs.name}
-                  </CardTitle>
-                  <CardDescription className="flex items-center gap-4 mt-2">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {obs.date} at {obs.time}
-                    </span>
-                    {obs.coordinates && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {obs.coordinates}
-                      </span>
-                    )}
-                  </CardDescription>
-                </div>
-                <div className="flex gap-2">
-                  {obs.object && <Badge className={getObjectColor(obs.object)}>{obs.object}</Badge>}
-                  {obs.seeing && <Badge className={getSeeingColor(obs.seeing)}>{obs.seeing}</Badge>}
-                </div>
-              </div>
-            </CardHeader>
+        <h3 className="text-xl font-semibold text-white">Your Observations ({observations.length})</h3>
+        {observations.length === 0 ? (
+          <Card className="bg-black/40 backdrop-blur-sm border-purple-500/20 text-center py-12">
             <CardContent>
-              <p className="text-gray-300">{obs.notes}</p>
+              <Camera className="w-12 h-12 mx-auto mb-4 text-gray-400 opacity-50" />
+              <p className="text-lg text-gray-400">No observations yet</p>
+              <p className="text-sm text-gray-500">Start tracking your celestial discoveries!</p>
             </CardContent>
           </Card>
-        ))}
+        ) : (
+          observations.map((obs) => (
+            <Card key={obs.id} className="bg-black/40 backdrop-blur-sm border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
+              <CardHeader className="pb-3">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <Eye className="w-4 h-4" />
+                      {obs.name}
+                    </CardTitle>
+                    <CardDescription className="flex items-center gap-4 mt-2">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {obs.date} {obs.time && `at ${obs.time}`}
+                      </span>
+                      {obs.coordinates && (
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3 h-3" />
+                          {obs.coordinates}
+                        </span>
+                      )}
+                    </CardDescription>
+                  </div>
+                  <div className="flex gap-2">
+                    {obs.object && <Badge className={getObjectColor(obs.object)}>{obs.object}</Badge>}
+                    {obs.seeing && <Badge className={getSeeingColor(obs.seeing)}>{obs.seeing}</Badge>}
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">{obs.notes}</p>
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );

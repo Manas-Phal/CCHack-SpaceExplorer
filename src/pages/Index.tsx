@@ -1,24 +1,52 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, CalendarDays, Camera, Eye, Filter, MapPin, Search, Star, Trophy, Upload, User, Zap } from 'lucide-react';
+import { Calendar, Camera, Eye, Filter, MapPin, Search, Star, Trophy, Upload, User, Zap, LogOut } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
 import StarField from '../components/StarField';
 import CelestialObjects from '../components/CelestialObjects';
 import SkyEvents from '../components/SkyEvents';
 import ObservationTracker from '../components/ObservationTracker';
 import UserProfile from '../components/UserProfile';
+import AuthModal from '../components/AuthModal';
+import StarMap3D from '../components/StarMap3D';
+import SkyTonight from '../components/SkyTonight';
 
 const Index = () => {
+  const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('explore');
-  const [userLevel, setUserLevel] = useState(3);
-  const [badges, setBadges] = useState(['First Light', 'Star Gazer', 'Deep Space']);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [starMapOpen, setStarMapOpen] = useState(false);
+  const [skyTonightOpen, setSkyTonightOpen] = useState(false);
+  const [userLevel] = useState(3);
+  const [badges] = useState(['First Light', 'Star Gazer', 'Deep Space']);
+
+  const handleStartExploring = () => {
+    if (user) {
+      setStarMapOpen(true);
+    } else {
+      setAuthModalOpen(true);
+    }
+  };
+
+  const handleViewSkyTonight = () => {
+    setSkyTonightOpen(true);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  if (starMapOpen) {
+    return <StarMap3D onBack={() => setStarMapOpen(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
@@ -40,12 +68,34 @@ const Index = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          <Badge variant="secondary" className="bg-purple-500/20 text-purple-300 border-purple-500/30">
-            Level {userLevel}
-          </Badge>
-          <Button variant="ghost" size="sm" className="text-purple-300 hover:bg-purple-500/20">
-            <User className="w-4 h-4" />
-          </Button>
+          {user ? (
+            <>
+              <Badge variant="secondary" className="bg-purple-500/20 text-purple-300 border-purple-500/30">
+                Level {userLevel}
+              </Badge>
+              <span className="text-sm text-gray-300">
+                {user.displayName || user.email}
+              </span>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={handleLogout}
+                className="text-purple-300 hover:bg-purple-500/20"
+              >
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </>
+          ) : (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setAuthModalOpen(true)}
+              className="text-purple-300 hover:bg-purple-500/20"
+            >
+              <User className="w-4 h-4 mr-2" />
+              Sign In
+            </Button>
+          )}
         </div>
       </header>
 
@@ -59,11 +109,20 @@ const Index = () => {
             Track celestial objects, discover constellations, and unlock the mysteries of space
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
+            <Button 
+              size="lg" 
+              onClick={handleStartExploring}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+            >
               <Zap className="w-5 h-5 mr-2" />
               Start Exploring
             </Button>
-            <Button size="lg" variant="outline" className="border-purple-500/50 text-purple-300 hover:bg-purple-500/20">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              onClick={handleViewSkyTonight}
+              className="border-purple-500/50 text-purple-300 hover:bg-purple-500/20"
+            >
               <Eye className="w-5 h-5 mr-2" />
               View Sky Tonight
             </Button>
@@ -112,6 +171,9 @@ const Index = () => {
           </Tabs>
         </div>
       </main>
+
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+      <SkyTonight open={skyTonightOpen} onOpenChange={setSkyTonightOpen} />
     </div>
   );
 };
