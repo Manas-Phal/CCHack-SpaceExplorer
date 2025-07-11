@@ -67,6 +67,7 @@ Design trends like glassmorphism, dark mode, glowing effects, and cosmic gradien
 
 ---
 
+
 ## 🛠 Tech Stack
 
 | Frontend     | Backend / Services         | Other |
@@ -77,6 +78,49 @@ Design trends like glassmorphism, dark mode, glowing effects, and cosmic gradien
 | Framer Motion |                            | Chart.js |
 
 ---
+
+## Project Structure
+space-explorer/
+├── public/                       # Static files
+│   ├── index.html
+│   ├── favicon.ico
+│   └── manifest.json
+│
+├── src/
+│   ├── assets/                   # Images, icons, background stars, etc.
+│   │   └── logo.svg
+│
+│   ├── components/               # Reusable UI components
+│   │   ├── CelestialCard.jsx
+│   │   ├── SkyTonightModal.jsx
+│   │   ├── ObservationForm.jsx
+│   │   └── Navbar.jsx
+│
+│   ├── pages/                    # Page-level components
+│   │   ├── Explore.jsx
+│   │   ├── Track.jsx
+│   │   ├── Profile.jsx
+│   │   └── Home.jsx
+│
+│   ├── context/                  # Firebase auth/user context
+│   │   └── AuthContext.jsx
+│
+│   ├── services/                 # API and Firebase logic
+│   │   ├── firebase.js
+│   │   ├── astronomyAPI.js       # (e.g., NASA or Open Meteo integration)
+│   │   └── uploadImage.js
+│
+│   ├── styles/                   # Tailwind config or global styles
+│   │   └── global.css
+│
+│   ├── App.jsx                   # App entry with routing
+│   ├── main.jsx                  # React DOM root
+│   └── router.jsx                # React Router config
+│
+├── .env                          # Environment variables (Firebase keys etc.)
+├── .gitignore
+├── package.json
+└── README.md
 
 ## 🔧 Installation
 
