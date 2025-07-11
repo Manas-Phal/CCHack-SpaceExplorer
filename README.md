@@ -81,13 +81,13 @@ Design trends like glassmorphism, dark mode, glowing effects, and cosmic gradien
 
 ## Project Structure
 space-explorer/
-├── public/                       # Static files
-│   ├── index.html
-│   ├── favicon.ico
-│   └── manifest.json
+├── public/                       # Static files served directly
+│   ├── index.html                # Main HTML file
+│   ├── favicon.ico               # Browser tab icon
+│   └── manifest.json             # PWA configuration
 │
-├── src/
-│   ├── assets/                   # Images, icons, background stars, etc.
+├── src/                          # Source files
+│   ├── assets/                   # Static assets (images, icons, etc.)
 │   │   └── logo.svg
 │
 │   ├── components/               # Reusable UI components
@@ -96,31 +96,32 @@ space-explorer/
 │   │   ├── ObservationForm.jsx
 │   │   └── Navbar.jsx
 │
-│   ├── pages/                    # Page-level components
+│   ├── pages/                    # Top-level views/pages
 │   │   ├── Explore.jsx
 │   │   ├── Track.jsx
 │   │   ├── Profile.jsx
 │   │   └── Home.jsx
 │
-│   ├── context/                  # Firebase auth/user context
+│   ├── context/                  # App context (e.g., Auth provider)
 │   │   └── AuthContext.jsx
 │
-│   ├── services/                 # API and Firebase logic
-│   │   ├── firebase.js
-│   │   ├── astronomyAPI.js       # (e.g., NASA or Open Meteo integration)
-│   │   └── uploadImage.js
+│   ├── services/                 # External services and APIs
+│   │   ├── firebase.js           # Firebase configuration
+│   │   ├── astronomyAPI.js       # Astronomy data integration (NASA, etc.)
+│   │   └── uploadImage.js        # Image upload handler
 │
-│   ├── styles/                   # Tailwind config or global styles
+│   ├── styles/                   # Global and utility styles
 │   │   └── global.css
 │
-│   ├── App.jsx                   # App entry with routing
-│   ├── main.jsx                  # React DOM root
-│   └── router.jsx                # React Router config
+│   ├── App.jsx                   # Main app component with routes
+│   ├── main.jsx                  # Entry point for ReactDOM rendering
+│   └── router.jsx                # Route definitions
 │
-├── .env                          # Environment variables (Firebase keys etc.)
-├── .gitignore
-├── package.json
-└── README.md
+├── .env                          # Environment variables (e.g., API keys)
+├── .gitignore                    # Git ignored files
+├── package.json                  # Project metadata and dependencies
+└── README.md                     # Project documentation
+
 
 ## 🔧 Installation
 
