@@ -87,7 +87,9 @@ const ObservationTracker = () => {
     
     setIsLoading(true);
     try {
-      const docs = await getDocuments('observations', user.uid);
+      const allDocs = await getDocuments('observations');
+      const docs = allDocs.filter(doc => doc.userId === user.uid);
+
       setObservations(docs);
     } catch (error) {
       console.error('Error loading observations:', error);
