@@ -1,25 +1,21 @@
-# Welcome to your Lovable project
+
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/b18f9cf9-b242-4b3c-b93d-3bbd753e6823
+Features
+Hero section with CTA and animated stars background
+Interactive star map (zoom, drag, click to view star info)
+Celestial object database (filter by type, view details)
+Sky events feed (upcoming eclipses, meteor showers, ISS)
+Observation tracker with form (name, date, RA/DEC, notes, image upload)
+AI constellation detector (upload image → detect constellations)
+AR sky view (for mobile, using location and orientation)
+Gamified challenges with profile-level badges
+Firebase/Supabase for Auth and Realtime DB
+Voice command to control features (“Track Mars”, “Show Orion”)
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/b18f9cf9-b242-4b3c-b93d-3bbd753e6823) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
+⚙ Use modern frontend stack (React or Next.js), Firebase backend, dark mode toggle, responsive UI, and smooth animations. Deploy on Vercel or Render."
 Follow these steps:
 
 ```sh
