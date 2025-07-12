@@ -2,7 +2,7 @@
 
 **A visually stunning, interactive space exploration platform** inspired by NASA and modern astronomy apps like SkyView and Star Walk. Space Explorer+ brings the cosmos to your fingertips with an immersive dark theme, animated starfield, interactive celestial data, 3D solar system, and real-time observation tracking.
 
-![Space Explorer+ Preview](https://your-image-link-here.com) 
+
 
 ---
 # 🌌 Project Overview
@@ -174,6 +174,9 @@ npm start
 📊 Observation Stats Dashboard
 🌌 Hero Section with CTA
 🎨 Responsive Mobile UI
+![Space Explorer+ ](https://drive.google.com/drive/folders/14cjALPv5Mo7SBL0wZ0B3TqkYuyx-R7tH?usp=sharing) 
+
+
 
 ## 📦 Deployment
 - Fully responsive and production-ready
