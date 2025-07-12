@@ -332,9 +332,9 @@ const ObservationTracker = () => {
                   name="coordinates.dec"
                   value={formData.coordinates.dec}
                   onChange={handleInputChange}
-                  placeholder="e.g., +41° 16' 09\""
+                  placeholder="e.g., +41° 16' 09&quot;"
                   className="bg-black/40 border-purple-500/30 text-white"
-                </>
+                />
               </div>
             </div>
 
