@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from '../hooks/useAuth';
-import { Mail, Lock, Chrome } from 'lucide-react';
+import { Mail, Lock, Chrome, Github } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 interface AuthModalProps {
@@ -18,7 +18,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onOpenChange }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp, signInWithGoogle } = useAuth();
+  const { signIn, signUp, signInWithGoogle, signInWithGitHub } = useAuth();
   const { toast } = useToast();
 
   const handleEmailAuth = async (isSignUp: boolean) => {
@@ -62,6 +62,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onOpenChange }) => {
     setLoading(true);
     try {
       await signInWithGoogle();
+      toast({
+        title: "Success",
+        description: "Welcome to Space Explorer+!"
+      });
+      onOpenChange(false);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGitHubAuth = async () => {
+    setLoading(true);
+    try {
+      await signInWithGitHub();
       toast({
         title: "Success",
         description: "Welcome to Space Explorer+!"
@@ -182,15 +202,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onOpenChange }) => {
           </div>
         </div>
 
-        <Button
-          onClick={handleGoogleAuth}
-          disabled={loading}
-          variant="outline"
-          className="w-full border-purple-500/50 text-purple-300 hover:bg-purple-500/20"
-        >
-          <Chrome className="w-4 h-4 mr-2" />
-          Google
-        </Button>
+        <div className="grid grid-cols-2 gap-3">
+          <Button
+            onClick={handleGoogleAuth}
+            disabled={loading}
+            variant="outline"
+            className="border-purple-500/50 text-purple-300 hover:bg-purple-500/20"
+          >
+            <Chrome className="w-4 h-4 mr-2" />
+            Google
+          </Button>
+          <Button
+            onClick={handleGitHubAuth}
+            disabled={loading}
+            variant="outline"
+            className="border-purple-500/50 text-purple-300 hover:bg-purple-500/20"
+          >
+            <Github className="w-4 h-4 mr-2" />
+            GitHub
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

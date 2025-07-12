@@ -1,6 +1,6 @@
 
 import { useState, useEffect, createContext, useContext } from 'react';
-import { User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../config/firebase';
 
 interface AuthContextType {
@@ -9,6 +9,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
+  signInWithGitHub: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -40,12 +41,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await signInWithPopup(auth, provider);
   };
 
+  const signInWithGitHub = async () => {
+    const provider = new GithubAuthProvider();
+    await signInWithPopup(auth, provider);
+  };
+
   const logout = async () => {
     await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signInWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signUp, signInWithGoogle, signInWithGitHub, logout }}>
       {children}
     </AuthContext.Provider>
   );
