@@ -170,7 +170,7 @@ REACT_APP_FIREBASE_APP_ID=your_app_id
 npm start
 
 ## 📸 Screenshots
-🚀 3D Solar System Viewer \n
+🚀 3D Solar System Viewer
 📊 Observation Stats Dashboard
 🌌 Hero Section with CTA
 🎨 Responsive Mobile UI
